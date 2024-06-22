@@ -1,7 +1,5 @@
 # OLGram
 
-[![Static Analysis Status](https://github.com/civsocit/olgram/workflows/Linter/badge.svg)](https://github.com/civsocit/olgram/actions?workflow=Linter) 
-[![Deploy Status](https://github.com/civsocit/olgram/workflows/Deploy/badge.svg)](https://github.com/civsocit/olgram/actions?workflow=Deploy)
 [![Documentation](https://readthedocs.org/projects/olgram/badge/?version=latest)](https://olgram.readthedocs.io)
 
 [@OlgramBot](https://t.me/olgrambot) - конструктор ботов обратной связи в Telegram
