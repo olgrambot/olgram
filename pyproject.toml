@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "olgram"
+version = "0.2.0"
+description = ""
+authors = ["Civ Soc <feedback@civsoc.it>"]
+license = "CC0"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+aiogram = "2.13"
+python-dotenv = "^0.19.2"
+aiocache = "^0.11.1"
+aiohttp = "^3.8.1"
+pycrypto = "^2.6.1"
+aioredis = "1.3"
+aerich = "0.5.x"
+tortoise-orm = {extras = ["asyncpg"], version = "^0.18.1"}
+python-gettext = "^4.0"
+
+[tool.poetry.dev-dependencies]
+flake8 = "^4.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

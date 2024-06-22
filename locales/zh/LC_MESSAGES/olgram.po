@@ -1,0 +1,557 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2022-03-22 04:36+0300\n"
+"PO-Revision-Date: 2022-03-22 04:55+0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
+
+#: olgram/commands/bot_actions.py:21
+msgid "Бот удалён"
+msgstr "移除机器人"
+
+#: olgram/commands/bot_actions.py:37 olgram/commands/bot_actions.py:49
+msgid "Текст сброшен"
+msgstr "重置文本"
+
+#: olgram/commands/bot_actions.py:63
+msgid "Выбран личный чат"
+msgstr "选择了私聊"
+
+#: olgram/commands/bot_actions.py:68
+msgid "Нельзя привязать бота к этому чату"
+msgstr "你不能将机器人链接到这个群聊"
+
+#: olgram/commands/bot_actions.py:72
+msgid "Выбран чат {0}"
+msgstr "聊天选择 {0}"
+
+#: olgram/commands/bots.py:42
+msgid "У вас уже слишком много ботов."
+msgstr "你已经有太多的机器人了。"
+
+#: olgram/commands/bots.py:45
+msgid ""
+"\n"
+"    Чтобы подключить бот, вам нужно выполнить три действия:\n"
+"\n"
+"    1. Перейдите в бот @BotFather, нажмите START и отправьте команду /"
+"newbot\n"
+"    2. Введите название бота, а потом username бота.\n"
+"    3. После создания бота перешлите ответное сообщение в этот бот или "
+"скопируйте и пришлите token бота.\n"
+"\n"
+"    Важно: не подключайте боты, которые используются в других сервисах "
+"(Manybot, Chatfuel, Livegram и других).\n"
+"    "
+msgstr ""
+"\n"
+"    要连接机器人，你需要遵循三个步骤。\n"
+"\n"
+"    1. 转到机器人@BotFather，按/START键并发送/newbot\n"
+"    2. 输入机器人的名字，然后输入机器人的用户名。\n"
+"    3. 一旦创建了机器人，就向这个机器人转发一条回复信息，或者复制并发送机器人"
+"的令牌。\n"
+"\n"
+"    重要：不要连接用于其他服务的机器人（Manybot、Chatfuel、Livegram和其"
+"他）。\n"
+"    "
+
+#: olgram/commands/bots.py:65
+msgid ""
+"\n"
+"        Это не токен бота.\n"
+"\n"
+"        Токен выглядит вот так: 123456789:AAAA-"
+"abc123_AbcdEFghijKLMnopqrstu12\n"
+"        "
+msgstr ""
+"\n"
+"        这不是一个机器人令牌。\n"
+"\n"
+"        该令牌看起来像这样：123456789:AAAA-abc123_AbcdEFghijKLMnopqrstu12\n"
+"        "
+
+#: olgram/commands/bots.py:72
+msgid ""
+"\n"
+"        Не удалось запустить этого бота: неверный токен\n"
+"        "
+msgstr ""
+"\n"
+"        运行此机器人失败：错误的令牌\n"
+"        "
+
+#: olgram/commands/bots.py:77
+msgid ""
+"\n"
+"        Не удалось запустить этого бота: непредвиденная ошибка\n"
+"        "
+msgstr ""
+"\n"
+"        该机器人无法启动：意外错误\n"
+"        "
+
+#: olgram/commands/bots.py:82
+msgid ""
+"\n"
+"        Такой бот уже есть в базе данных\n"
+"        "
+msgstr ""
+"\n"
+"        这个机器人已经在数据库中出现了\n"
+"        "
+
+#: olgram/commands/bots.py:114
+msgid "Бот добавлен! Список ваших ботов: /mybots"
+msgstr "机器人已加入! 你的机器人列表：/mybots"
+
+#: olgram/commands/info.py:21
+msgid "Недостаточно прав"
+msgstr "没有足够的权利"
+
+#: olgram/commands/info.py:32
+msgid "Количество ботов: {0}\n"
+msgstr "机器人的数量。{0}\n"
+
+#: olgram/commands/info.py:33
+msgid "Количество пользователей (у конструктора): {0}\n"
+msgstr "用户的数量（在构造器处）。{0}\n"
+
+#: olgram/commands/info.py:34
+msgid "Шаблонов ответов: {0}\n"
+msgstr "回复模板。{0}\n"
+
+#: olgram/commands/info.py:35
+msgid "Входящих сообщений у всех ботов: {0}\n"
+msgstr "所有的机器人都有传入的信息。{0}\n"
+
+#: olgram/commands/info.py:36
+msgid "Исходящих сообщений у всех ботов: {0}\n"
+msgstr "所有的机器人都有外发信息。{0}\n"
+
+#: olgram/commands/menu.py:31
+msgid ""
+"\n"
+"        У вас нет добавленных ботов.\n"
+"\n"
+"        Отправьте команду /addbot, чтобы добавить бот.\n"
+"        "
+msgstr ""
+"\n"
+"        你没有添加任何机器人。\n"
+"\n"
+"        发送命令/addbot来添加一个机器人。\n"
+"        "
+
+#: olgram/commands/menu.py:46
+msgid "Ваши боты"
+msgstr "你的机器人"
+
+#: olgram/commands/menu.py:67
+msgid "Личные сообщения"
+msgstr "个人留言"
+
+#: olgram/commands/menu.py:72 olgram/commands/menu.py:117
+#: olgram/commands/menu.py:143 olgram/commands/menu.py:166
+#: olgram/commands/menu.py:222
+msgid "<< Назад"
+msgstr "<< 返回"
+
+#: olgram/commands/menu.py:78
+msgid ""
+"\n"
+"        Этот бот не добавлен в чаты, поэтому все сообщения будут приходить "
+"вам в бот.\n"
+"        Чтобы подключить чат — добавьте бот @{0} в чат, откройте это меню "
+"ещё раз и выберите добавленный чат.\n"
+"        Если ваш бот состоял в групповом чате до того, как его добавили в "
+"Olgram - удалите бота из чата и добавьте\n"
+"        снова.\n"
+"        "
+msgstr ""
+"\n"
+"        这个机器人没有被添加到聊天记录中，所以所有的信息都会在机器人中找到"
+"你。\n"
+"        要连接群聊--将机器人@{0}添加到群聊中，再次打开此菜单并选择添加的群"
+"聊。\n"
+"        如果你的机器人在添加到Olgram之前是在群组中，请将其从群聊中删"
+"除，然后添加到群组中。\n"
+"        再次。\n"
+"        "
+
+#: olgram/commands/menu.py:85
+msgid ""
+"\n"
+"        В этом разделе вы можете привязать бота @{0} к чату.\n"
+"        Выберите чат, куда бот будет пересылать сообщения.\n"
+"        "
+msgstr ""
+"\n"
+"        在本节中，您可以将@{0}机器人绑定到一个群聊中。\n"
+"        选择机器人将转发消息的群聊。\n"
+"        "
+
+#: olgram/commands/menu.py:97
+msgid "Текст"
+msgstr "自动回复"
+
+#: olgram/commands/menu.py:102
+msgid "Чат"
+msgstr "群聊"
+
+#: olgram/commands/menu.py:107
+msgid "Удалить бот"
+msgstr "删除机器人"
+
+#: olgram/commands/menu.py:112
+msgid "Статистика"
+msgstr "统计数据"
+
+#: olgram/commands/menu.py:121
+msgid "Опции"
+msgstr "选择"
+
+#: olgram/commands/menu.py:126
+msgid ""
+"\n"
+"    Управление ботом @{0}.\n"
+"\n"
+"    Если у вас возникли вопросы по настройке бота, то посмотрите нашу "
+"справку /help или напишите нам\n"
+"    @civsocit_feedback_bot\n"
+"    "
+msgstr ""
+"\n"
+"    机器人管理@{0}。\n"
+"\n"
+"    如果你有任何关于机器人配置的问题，请参阅我们的帮助/help\n"
+"    "
+
+#: olgram/commands/menu.py:138
+msgid "Да, удалить бот"
+msgstr "是的，删除该机器人"
+
+#: olgram/commands/menu.py:147
+msgid ""
+"\n"
+"    Вы уверены, что хотите удалить бота @{0}?\n"
+"    "
+msgstr ""
+"\n"
+"    你确定要删除机器人@{0}吗？\n"
+"    "
+
+#: olgram/commands/menu.py:156
+msgid "Потоки сообщений"
+msgstr "信息流"
+
+#: olgram/commands/menu.py:161
+msgid "Данные пользователя"
+msgstr "用户数据"
+
+#: olgram/commands/menu.py:171 olgram/commands/menu.py:172
+msgid "включены"
+msgstr "包括"
+
+#: olgram/commands/menu.py:171 olgram/commands/menu.py:172
+msgid "выключены"
+msgstr "关闭"
+
+#: olgram/commands/menu.py:173
+msgid ""
+"\n"
+"    <a href=\"https://olgram.readthedocs.io/ru/latest/options.html#threads"
+"\">Потоки сообщений</a>: <b>{0}</b>\n"
+"    <a href=\"https://olgram.readthedocs.io/ru/latest/options.html#user-info"
+"\">Данные пользователя</a>: <b>{1}</b>\n"
+"    "
+msgstr ""
+"\n"
+"    <a href=\"https://olgram.readthedocs.io/ru/latest/options.html#threads\">"
+"信息流</a>: <b>{0}</b>\n"
+"    <a href=\"https://olgram.readthedocs.io/ru/latest/options.html#user-info"
+"\">用户数据</a>: <b>{1}</b>\n"
+"    "
+
+#: olgram/commands/menu.py:185 olgram/commands/menu.py:247
+#: olgram/commands/menu.py:289
+msgid "<< Завершить редактирование"
+msgstr "<< 完成编辑"
+
+#: olgram/commands/menu.py:189
+msgid "Автоответчик"
+msgstr "自动回复"
+
+#: olgram/commands/menu.py:194 olgram/commands/menu.py:261
+msgid "Сбросить текст"
+msgstr "重置文本"
+
+#: olgram/commands/menu.py:199
+msgid ""
+"\n"
+"    Сейчас вы редактируете текст, который отправляется после того, как "
+"пользователь отправит вашему боту @{0}\n"
+"    команду /start\n"
+"\n"
+"    Текущий текст:\n"
+"    <pre>{1}</pre>\n"
+"    Отправьте сообщение, чтобы изменить текст.\n"
+"    "
+msgstr ""
+"\n"
+"    你现在正在编辑用户向你的机器人发送@{0}之后的文本。\n"
+"    /start\n"
+"\n"
+"    目前的文本。\n"
+"    <pre>{1}</pre>\n"
+"    发送消息，改变文本。\n"
+"    "
+
+#: olgram/commands/menu.py:226
+msgid ""
+"\n"
+"    Статистика по боту @{0}\n"
+"\n"
+"    Входящих сообщений: <b>{1}</b>\n"
+"    Ответных сообщений: <b>{2}</b>\n"
+"    Шаблоны ответов: <b>{3}</b>\n"
+"    Забанено пользователей: <b>{4}</b>\n"
+"    "
+msgstr ""
+"\n"
+"    机器人统计 @{0}\n"
+"\n"
+"    收到的信息: <b>{1}</b>\n"
+"    回复信息: <b>{2}</b>\n"
+"    回复模板: <b>{3}</b>\n"
+"    被禁止的用户: <b>{4}</b>\n"
+"    "
+
+#: olgram/commands/menu.py:251
+msgid "Предыдущий текст"
+msgstr ""
+
+#: olgram/commands/menu.py:256
+msgid "Шаблоны ответов..."
+msgstr "回复模板..."
+
+#: olgram/commands/menu.py:266
+msgid ""
+"\n"
+"    Сейчас вы редактируете текст автоответчика. Это сообщение отправляется в "
+"ответ на все входящие сообщения @{0} автоматически. По умолчанию оно "
+"отключено.\n"
+"\n"
+"    Текущий текст:\n"
+"    <pre>{1}</pre>\n"
+"    Отправьте сообщение, чтобы изменить текст.\n"
+"    "
+msgstr ""
+"\n"
+"    你现在正在编辑自动回复的文本。该信息会自动响应所有收到的@{0}信息而发送。"
+"默认情况下，它是禁用的。\n"
+"\n"
+"    目前的文本。\n"
+"    <pre>{1}</pre>。\n"
+"    发送消息，改变文本。\n"
+"    "
+
+#: olgram/commands/menu.py:276
+msgid "(отключено)"
+msgstr "(关闭)"
+
+#: olgram/commands/menu.py:293
+msgid ""
+"\n"
+"    Сейчас вы редактируете шаблоны ответов для @{0}. Текущие шаблоны:\n"
+"\n"
+"    <pre>\n"
+"    {1}\n"
+"    </pre>\n"
+"    Отправьте какую-нибудь фразу (например: \"Ваш заказ готов, ожидайте!\"), "
+"чтобы добавить её в шаблон.\n"
+"    Чтобы удалить шаблон из списка, отправьте его номер в списке (например, "
+"4)\n"
+"    "
+msgstr ""
+"\n"
+"    你现在正在编辑@{0}的回复模板。目前的模板。\n"
+"\n"
+"    <pre>\n"
+"    {1}\n"
+"    </pre>。\n"
+"    发送一个短语（例如：\"您的订单已准备好，请等待！\"），将其添加到模板"
+"中。\n"
+"    要从列表中删除一个模板，请发送它在列表中的编号（如4）。\n"
+"    "
+
+#: olgram/commands/menu.py:312
+msgid "(нет шаблонов)"
+msgstr "(没有模板)"
+
+#: olgram/commands/menu.py:351
+msgid "У вас нет шаблонов, чтобы их удалять"
+msgstr "你没有模板来删除它们"
+
+#: olgram/commands/menu.py:353
+msgid "Неправильное число. Чтобы удалить шаблон, введите число от 0 до {0}"
+msgstr "不正确的数字。要删除一个模式，请在0和{0}之间输入一个数字。"
+
+#: olgram/commands/menu.py:361
+msgid "У вашего бота уже слишком много шаблонов"
+msgstr "你的机器人已经有太多的模式了"
+
+#: olgram/commands/menu.py:365
+msgid "Такой текст уже есть в списке шаблонов"
+msgstr "此文本已在模板列表中"
+
+#: olgram/commands/menu.py:383
+msgid "У вас нет прав на этого бота"
+msgstr "你对这个机器人没有任何权利"
+
+#: olgram/commands/start.py:23
+msgid ""
+"\n"
+"    Olgram Bot — это конструктор ботов обратной связи в Telegram. Подробнее "
+"<a href=\"https://olgram.readthedocs.io\">читайте здесь</a>.\n"
+"\n"
+"    Используйте эти команды, чтобы управлять этим ботом:\n"
+"\n"
+"    /addbot - добавить бот\n"
+"    /mybots - управление ботами\n"
+"\n"
+"    /help - помощь\n"
+"    "
+msgstr ""
+"\n"
+"    Olgram Bot — 是一个Telegram反馈机器人的构建者。阅读更多 <a href="
+"\"https://olgram.readthedocs.io\">在此阅读</a>.\n"
+"\n"
+"    使用这些命令来控制这个机器人:\n"
+"\n"
+"    /addbot - 绑定机器人\n"
+"    /mybots - 机器人控制\n"
+"\n"
+"    /help - 帮助\n"
+"    "
+
+#: olgram/commands/start.py:42
+msgid ""
+"\n"
+"    Читайте инструкции на нашем сайте https://olgram.readthedocs.io\n"
+"    Техническая поддержка: @civsocit_feedback_bot\n"
+"    Версия {0}\n"
+"    "
+msgstr ""
+"\n"
+"    请阅读我们网站上的说明 https://olgram.readthedocs.io\n"
+"    版本{0}\n"
+"    "
+
+#: olgram/models/models.py:30
+msgid ""
+"\n"
+"    Здравствуйте!\n"
+"    Напишите ваш вопрос и мы ответим вам в ближайшее время.\n"
+"    "
+msgstr ""
+"\n"
+"    你好!\n"
+"    请写下您的问题，我们将很快给您答复。\n"
+"    "
+
+#: olgram/utils/permissions.py:40
+msgid "Владелец бота ограничил доступ к этому функционалу 😞"
+msgstr "机器人所有者已经限制了对该功能的访问 😞"
+
+#: olgram/utils/permissions.py:52
+msgid "Владелец бота ограничил доступ к этому функционалу😞"
+msgstr "机器人主人限制了对该功能的访问😞。"
+
+#: server/custom.py:40
+msgid ""
+"<b>Политика конфиденциальности</b>\n"
+"\n"
+"Этот бот не хранит ваши сообщения, имя пользователя и @username. При "
+"отправке сообщения (кроме команд /start и /security_policy) ваш "
+"идентификатор пользователя записывается в кеш на некоторое время и потом "
+"удаляется из кеша. Этот идентификатор используется только для общения с "
+"оператором; боты Olgram не делают массовых рассылок.\n"
+"\n"
+msgstr ""
+"<b>隐私政策</b\n"
+"\n"
+"这个机器人不存储你的信息、用户名或@用户名。当你发送消息时（除/start和/"
+"security_policy外），你的用户名会被缓存一段时间，然后从缓存中删除。这个ID只用"
+"于与运营商沟通；Olgram机器人不做批量信息发送。\n"
+"\n"
+
+#: server/custom.py:46
+msgid ""
+"При отправке сообщения (кроме команд /start и /security_policy) оператор "
+"<b>видит</b> ваши имя пользователя, @username и идентификатор пользователя в "
+"силу настроек, которые оператор указал при создании бота."
+msgstr ""
+"当发送消息时（除了/start和/security_policy），操作者<b>看到</b>你的用户名、@"
+"用户名和用户ID，凭借的是操作者在创建机器人时指定的设置。"
+
+#: server/custom.py:50
+msgid ""
+"В зависимости от ваших настроек конфиденциальности Telegram, оператор может "
+"видеть ваш username, имя пользователя и другую информацию."
+msgstr ""
+"根据你的Telegram隐私设置，运营商可能会看到你的用户名，用户名和其他信息。"
+
+#: server/custom.py:61
+msgid "Сообщение от пользователя "
+msgstr "用户的信息 "
+
+#: server/custom.py:88
+msgid "Вы заблокированы в этом боте"
+msgstr "你在这个机器人中被封锁了"
+
+#: server/custom.py:128
+msgid ""
+"<i>Невозможно переслать сообщение: автор не найден (сообщение слишком "
+"старое?)</i>"
+msgstr "无法转发信息：找不到作者（信息太旧？）"
+
+#: server/custom.py:136
+msgid "Пользователь заблокирован"
+msgstr "用户被封锁了"
+
+#: server/custom.py:141
+msgid "Пользователь не был забанен"
+msgstr "该用户没有被禁止"
+
+#: server/custom.py:144
+msgid "Пользователь разбанен"
+msgstr "解禁用户"
+
+#: server/custom.py:149
+msgid "<i>Невозможно переслать сообщение (автор заблокировал бота?)</i>"
+msgstr "无法转发该信息（作者已经屏蔽了机器人？）"
+
+#: server/server.py:41
+msgid "(Пере)запустить бота"
+msgstr "(重新)启动机器人"
+
+#: server/server.py:42
+msgid "Политика конфиденциальности"
+msgstr "隐私政策"
+
+
+msgid "\n\nЭтот бот создан с помощью @OlgramBot"
+msgstr "\n\n "

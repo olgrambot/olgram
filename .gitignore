@@ -1,0 +1,15 @@
+venv
+.env
+.venv
+.idea
+__pycache__
+*.pyc
+config.json
+docker-compose-release.yaml
+docs/build
+ad.md
+release.env
+test.py
+backup
+*.mo
+*.pot
