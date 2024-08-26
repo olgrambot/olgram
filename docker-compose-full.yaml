@@ -1,0 +1,73 @@
+# Пример сложной конфигурации сервера: реверс-прокси
+version: '3'
+services:
+  postgres:
+    image: postgres:13.4
+    restart: unless-stopped
+    env_file:
+      - release.env
+    volumes:
+      - database:/var/lib/postgresql/data
+    networks:
+      - traefik
+  redis:
+    image: 'bitnami/redis:6.2.7'
+    restart: unless-stopped
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - redis-db:/bitnami/redis/data
+    env_file:
+      - release.env
+    networks:
+      - traefik
+  olgram:
+    build: .
+    restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.static.rule=Host(`bot.civsoc.com`)"
+      - "traefik.http.routers.static.tls=true"
+      - "traefik.http.routers.static.tls.certresolver=le"
+      - "traefik.http.routers.static.entrypoints=websecure"
+      - "traefik.docker.network=traefik"
+    env_file:
+      - release.env
+    depends_on:
+      - postgres
+      - redis
+  traefik:
+    image: traefik:v2.4
+    container_name: olgram_traefik
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - traefik
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./acme:/acme
+    command:
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --providers.docker=true
+      - --providers.docker.endpoint=unix:///var/run/docker.sock
+      - --providers.docker.exposedByDefault=false
+      - --providers.docker.network=traefik
+      - --certificatesresolvers.le.acme.email=feedback@civsoc.com
+      - --certificatesresolvers.le.acme.storage=/acme/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=false
+      - --certificatesresolvers.le.acme.httpchallenge=true
+      - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
+
+volumes:
+  database:
+  redis-db:
+
+networks:
+  traefik:
+    driver: bridge
