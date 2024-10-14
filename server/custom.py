@@ -281,6 +281,11 @@ async def handle_operator_message(message: types.Message, super_chat_id: int, bo
             await message.reply(_("<i>Невозможно переслать сообщение (автор заблокировал бота?)</i>"),
                                 parse_mode="HTML")
             return
+        except exceptions.BadRequest as err:
+            _logger.error(f"(exception on copying) {err}")
+            await message.reply(_("<i>Невозможно переслать сообщение</i>"),
+                                parse_mode="HTML")
+            return
 
         bot.outgoing_messages_count = F("outgoing_messages_count") + 1
         await bot.save(update_fields=["outgoing_messages_count"])
