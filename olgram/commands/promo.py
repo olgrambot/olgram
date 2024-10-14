@@ -24,7 +24,7 @@ async def new_promo(message: types.Message, state: FSMContext):
         return
 
     promo = await models.Promo()
-    await message.answer(_("Новый промокод\n```{0}```").format(promo.code), parse_mode="Markdown")
+    await message.answer(_("```{0}```").format(promo.code), parse_mode="Markdown")
 
     await promo.save()
 
