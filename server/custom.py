@@ -195,24 +195,22 @@ async def handle_user_message(message: types.Message, super_chat_id: int, bot):
     # Проверить, не забанен ли пользователь
     banned = await bot.banned_users.filter(telegram_id=message.chat.id)
     if banned:
-        return SendMessage(chat_id=message.chat.id,
-                           text=_("Вы заблокированы в этом боте"))
+        return await message.answer(text=_("Вы заблокированы в этом боте"))
 
     # Проверить анти-флуд
     if bot.enable_antiflood:
         if await _redis.get(_antiflood_marker_uid(bot.pk, message.chat.id)):
-            return SendMessage(chat_id=message.chat.id,
-                               text=_("Слишком много сообщений, подождите одну минуту"))
+            return await message.answer(text=_("Слишком много сообщений, подождите одну минуту"))
         await _redis.setex(_antiflood_marker_uid(bot.pk, message.chat.id), 60, 1)
 
     # Пересылаем сообщение в супер-чат
     try:
         await send_to_superchat(is_super_group, message, super_chat_id, bot)
     except (exceptions.Unauthorized, exceptions.ChatNotFound):
-        return SendMessage(chat_id=message.chat.id, text=_("Не удаётся связаться с владельцем бота"))
+        return await message.answer(text=_("Не удаётся связаться с владельцем бота"))
     except exceptions.RetryAfter:
-        return SendMessage(chat_id=message.chat.id, text=_("Слишком много сообщений, подождите одну минуту"),
-                           reply_to_message_id=message.message_id)
+        return await message.answer(text=_("Слишком много сообщений, подождите одну минуту"),
+                             reply_to_message_id=message.message_id)
     except exceptions.TelegramAPIError as err:
         _logger.error(f"(exception on forwarding) {err}")
         return
@@ -225,7 +223,7 @@ async def handle_user_message(message: types.Message, super_chat_id: int, bot):
         await _redis.setex(_last_message_uid(bot.pk, message.chat.id), 60 * 60 * 3, 1)
         if send_auto or bot.enable_always_second_message:
             text_obj = await BotSecondMessage.get_or_none(bot=bot, locale=str(message.from_user.locale))
-            return SendMessage(chat_id=message.chat.id, text=text_obj.text if text_obj else bot.second_text,
+            return await message.answer(text=text_obj.text if text_obj else bot.second_text,
                                parse_mode="HTML")
 
 
@@ -243,8 +241,7 @@ async def handle_operator_message(message: types.Message, super_chat_id: int, bo
         if not chat_id:
             chat_id = message.reply_to_message.forward_from_chat
             if not chat_id:
-                return SendMessage(chat_id=message.chat.id,
-                                   text=_("<i>Невозможно переслать сообщение: автор не найден (сообщение слишком "
+                return await message.answer(text=_("<i>Невозможно переслать сообщение: автор не найден (сообщение слишком "
                                           "старое?)</i>"),
                                    parse_mode="HTML")
         chat_id = int(chat_id)
@@ -252,24 +249,24 @@ async def handle_operator_message(message: types.Message, super_chat_id: int, bo
         if message.text == "/ban":
             user, create = await BannedUser.get_or_create(telegram_id=chat_id, bot=bot)
             await user.save()
-            return SendMessage(chat_id=message.chat.id, text=_("Пользователь заблокирован"))
+            return await message.answer(text=_("Пользователь заблокирован"))
 
         if message.text == "/unban":
             banned_user = await bot.banned_users.filter(telegram_id=chat_id).first()
             if not banned_user:
-                return SendMessage(chat_id=message.chat.id, text=_("Пользователь не был забанен"))
+                return await message.answer(text=_("Пользователь не был забанен"))
             else:
                 await banned_user.delete()
-                return SendMessage(chat_id=message.chat.id, text=_("Пользователь разбанен"))
+                return await message.answer(text=_("Пользователь разбанен"))
         if bot.enable_tags:
             if message.text and message.text.startswith("/tag "):
                 tag = message.text.replace("/tag ", "")[:20].strip()
                 if tag:
                     await _redis.set(_tag_uid(bot.pk, chat_id), tag, pexpire=ServerSettings.redis_timeout_ms())
-                    return SendMessage(chat_id=message.chat.id, text=_("Тег выставлен"))
+                    return await message.answer(text=_("Тег выставлен"))
                 else:
                     await _redis.delete(_tag_uid(bot.pk, chat_id))
-                    return SendMessage(chat_id=message.chat.id, text=_("Тег убран"))
+                    return await message.answer(text=_("Тег убран"))
 
         try:
             sen = await message.copy_to(chat_id)
@@ -297,7 +294,7 @@ async def handle_operator_message(message: types.Message, super_chat_id: int, bo
         await message.forward(super_chat_id)
         # И отправить пользователю специальный текст, если он указан
         if bot.second_text:
-            return SendMessage(chat_id=message.chat.id, text=bot.second_text, parse_mode="HTML")
+            return await message.answer(text=bot.second_text, parse_mode="HTML")
 
 
 async def message_handler(message: types.Message, *args, **kwargs):
@@ -320,10 +317,10 @@ async def message_handler(message: types.Message, *args, **kwargs):
 
     if message.chat.id != super_chat_id:
         # Это обычный чат
-        return await handle_user_message(message, super_chat_id, bot)
+        return asyncio.create_task(handle_user_message(message, super_chat_id, bot))
     else:
         # Это супер-чат
-        return await handle_operator_message(message, super_chat_id, bot)
+        return asyncio.create_task(handle_operator_message(message, super_chat_id, bot))
 
 
 async def edited_message_handler(message: types.Message, *args, **kwargs):
