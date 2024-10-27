@@ -313,7 +313,10 @@ async def message_handler(message: types.Message, *args, **kwargs):
 
     if message.text and message.text == "/start":
         # На команду start нужно ответить, не пересылая сообщение никуда
-        text_obj = await BotStartMessage.get_or_none(bot=bot, locale=str(message.from_user.locale))
+        try:
+            text_obj = await BotStartMessage.get_or_none(bot=bot, locale=str(message.from_user.locale))
+        except Exception:
+            text_obj = None
         text = text_obj.text if text_obj else bot.start_text
         if bot.enable_olgram_text:
             text += _(ServerSettings.append_text())
