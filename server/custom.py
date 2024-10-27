@@ -97,8 +97,11 @@ async def send_user_message(message: types.Message, super_chat_id: int, bot, tag
         if message.from_user.username:
             user_info += " | @" + message.from_user.username
         user_info += f" | #ID{message.from_user.id}"
-        if message.from_user.locale:
-            user_info += f" | lang: {message.from_user.locale}"
+        try:
+            if message.from_user.locale:
+                user_info += f" | lang: {message.from_user.locale}"
+        except Exception:
+            pass
         if message.forward_sender_name:
             user_info += f" | fwd: {message.forward_sender_name}"
         tag = await _redis.get(_tag_uid(bot.pk, message.from_user.id), encoding="utf-8")
