@@ -186,114 +186,122 @@ async def _increase_count(_bot):
 
 async def handle_user_message(message: types.Message, super_chat_id: int, bot):
     """Обычный пользователь прислал сообщение в бот, нужно переслать его операторам"""
-    _ = _get_translator(message)
-    is_super_group = super_chat_id < 0
-
-    if bot.enable_mailing:
-        asyncio.create_task(MailingUser.get_or_create(telegram_id=message.chat.id, bot=bot))
-
-    # Проверить, не забанен ли пользователь
-    banned = await bot.banned_users.filter(telegram_id=message.chat.id)
-    if banned:
-        return await message.answer(text=_("Вы заблокированы в этом боте"))
-
-    # Проверить анти-флуд
-    if bot.enable_antiflood:
-        if await _redis.get(_antiflood_marker_uid(bot.pk, message.chat.id)):
-            return await message.answer(text=_("Слишком много сообщений, подождите одну минуту"))
-        await _redis.setex(_antiflood_marker_uid(bot.pk, message.chat.id), 60, 1)
-
-    # Пересылаем сообщение в супер-чат
     try:
-        await send_to_superchat(is_super_group, message, super_chat_id, bot)
-    except (exceptions.Unauthorized, exceptions.ChatNotFound):
-        return await message.answer(text=_("Не удаётся связаться с владельцем бота"))
-    except exceptions.RetryAfter:
-        return await message.answer(text=_("Слишком много сообщений, подождите одну минуту"))
-    except exceptions.TelegramAPIError as err:
-        _logger.error(f"(exception on forwarding) {err}")
-        return
+        _ = _get_translator(message)
+        is_super_group = super_chat_id < 0
 
-    asyncio.create_task(_increase_count(bot))
+        if bot.enable_mailing:
+            asyncio.create_task(MailingUser.get_or_create(telegram_id=message.chat.id, bot=bot))
 
-    # И отправить пользователю специальный текст, если он указан и если давно не отправляли
-    if bot.second_text:
-        send_auto = not await _redis.get(_last_message_uid(bot.pk, message.chat.id))
-        await _redis.setex(_last_message_uid(bot.pk, message.chat.id), 60 * 60 * 3, 1)
-        if send_auto or bot.enable_always_second_message:
-            text_obj = await BotSecondMessage.get_or_none(bot=bot, locale=str(message.from_user.locale))
-            return await message.answer(text=text_obj.text if text_obj else bot.second_text,
-                               parse_mode="HTML")
+        # Проверить, не забанен ли пользователь
+        banned = await bot.banned_users.filter(telegram_id=message.chat.id)
+        if banned:
+            return await message.answer(text=_("Вы заблокированы в этом боте"))
+
+        # Проверить анти-флуд
+        if bot.enable_antiflood:
+            if await _redis.get(_antiflood_marker_uid(bot.pk, message.chat.id)):
+                return await message.answer(text=_("Слишком много сообщений, подождите одну минуту"))
+            await _redis.setex(_antiflood_marker_uid(bot.pk, message.chat.id), 60, 1)
+
+        # Пересылаем сообщение в супер-чат
+        try:
+            await send_to_superchat(is_super_group, message, super_chat_id, bot)
+        except (exceptions.Unauthorized, exceptions.ChatNotFound):
+            return await message.answer(text=_("Не удаётся связаться с владельцем бота"))
+        except exceptions.RetryAfter:
+            return await message.answer(text=_("Слишком много сообщений, подождите одну минуту"))
+        except exceptions.TelegramAPIError as err:
+            _logger.error(f"(exception on forwarding) {err}")
+            return
+
+        asyncio.create_task(_increase_count(bot))
+
+        # И отправить пользователю специальный текст, если он указан и если давно не отправляли
+        if bot.second_text:
+            send_auto = not await _redis.get(_last_message_uid(bot.pk, message.chat.id))
+            await _redis.setex(_last_message_uid(bot.pk, message.chat.id), 60 * 60 * 3, 1)
+            if send_auto or bot.enable_always_second_message:
+                text_obj = await BotSecondMessage.get_or_none(bot=bot, locale=str(message.from_user.locale))
+                return await message.answer(text=text_obj.text if text_obj else bot.second_text,
+                                   parse_mode="HTML")
+    finally:
+        if not message.bot.session.closed:
+            await message.bot.session.close()
 
 
 async def handle_operator_message(message: types.Message, super_chat_id: int, bot):
     """Оператор написал что-то, нужно переслать сообщение обратно пользователю, или забанить его и т.д."""
-    _ = _get_translator(message)
+    try:
+        _ = _get_translator(message)
 
-    if message.reply_to_message:
+        if message.reply_to_message:
 
-        if message.reply_to_message.from_user.id != message.bot.id:
-            return  # нас интересуют только ответы на сообщения бота
+            if message.reply_to_message.from_user.id != message.bot.id:
+                return  # нас интересуют только ответы на сообщения бота
 
-        # В супер-чате кто-то ответил на сообщение пользователя, нужно переслать тому пользователю
-        chat_id = await _redis.get(_message_unique_id(bot.pk, message.reply_to_message.message_id))
-        if not chat_id:
-            chat_id = message.reply_to_message.forward_from_chat
+            # В супер-чате кто-то ответил на сообщение пользователя, нужно переслать тому пользователю
+            chat_id = await _redis.get(_message_unique_id(bot.pk, message.reply_to_message.message_id))
             if not chat_id:
-                return await message.answer(text=_("<i>Невозможно переслать сообщение: автор не найден (сообщение слишком "
-                                          "старое?)</i>"),
-                                   parse_mode="HTML")
-        chat_id = int(chat_id)
+                chat_id = message.reply_to_message.forward_from_chat
+                if not chat_id:
+                    return await message.answer(text=_("<i>Невозможно переслать сообщение: автор не найден (сообщение слишком "
+                                              "старое?)</i>"),
+                                       parse_mode="HTML")
+            chat_id = int(chat_id)
 
-        if message.text == "/ban":
-            user, create = await BannedUser.get_or_create(telegram_id=chat_id, bot=bot)
-            await user.save()
-            return await message.answer(text=_("Пользователь заблокирован"))
+            if message.text == "/ban":
+                user, create = await BannedUser.get_or_create(telegram_id=chat_id, bot=bot)
+                await user.save()
+                return await message.answer(text=_("Пользователь заблокирован"))
 
-        if message.text == "/unban":
-            banned_user = await bot.banned_users.filter(telegram_id=chat_id).first()
-            if not banned_user:
-                return await message.answer(text=_("Пользователь не был забанен"))
-            else:
-                await banned_user.delete()
-                return await message.answer(text=_("Пользователь разбанен"))
-        if bot.enable_tags:
-            if message.text and message.text.startswith("/tag"):
-                tag = message.text.replace("/tag", "")[:20].strip()
-                if tag:
-                    await _redis.set(_tag_uid(bot.pk, chat_id), tag, pexpire=ServerSettings.redis_timeout_ms())
-                    return await message.answer(text=_("Тег выставлен"))
+            if message.text == "/unban":
+                banned_user = await bot.banned_users.filter(telegram_id=chat_id).first()
+                if not banned_user:
+                    return await message.answer(text=_("Пользователь не был забанен"))
                 else:
-                    await _redis.delete(_tag_uid(bot.pk, chat_id))
-                    return await message.answer(text=_("Тег убран"))
+                    await banned_user.delete()
+                    return await message.answer(text=_("Пользователь разбанен"))
+            if bot.enable_tags:
+                if message.text and message.text.startswith("/tag"):
+                    tag = message.text.replace("/tag", "")[:20].strip()
+                    if tag:
+                        await _redis.set(_tag_uid(bot.pk, chat_id), tag, pexpire=ServerSettings.redis_timeout_ms())
+                        return await message.answer(text=_("Тег выставлен"))
+                    else:
+                        await _redis.delete(_tag_uid(bot.pk, chat_id))
+                        return await message.answer(text=_("Тег убран"))
 
-        try:
-            sen = await message.copy_to(chat_id)
+            try:
+                sen = await message.copy_to(chat_id)
 
-            asyncio.create_task(_redis.set(_edit_message_mapping(bot.pk, message),
-                                           f"{chat_id};{sen.message_id}",
-                                           pexpire=ServerSettings.redis_timeout_ms()))
-        except (exceptions.MessageError, exceptions.Unauthorized):
-            await message.reply(_("<i>Невозможно переслать сообщение (автор заблокировал бота?)</i>"),
-                                parse_mode="HTML")
-            return
-        except exceptions.BadRequest as err:
-            _logger.error(f"(exception on copying) {err}")
-            await message.reply(_("<i>Невозможно переслать сообщение</i>"),
-                                parse_mode="HTML")
-            return
+                asyncio.create_task(_redis.set(_edit_message_mapping(bot.pk, message),
+                                               f"{chat_id};{sen.message_id}",
+                                               pexpire=ServerSettings.redis_timeout_ms()))
+            except (exceptions.MessageError, exceptions.Unauthorized):
+                await message.reply(_("<i>Невозможно переслать сообщение (автор заблокировал бота?)</i>"),
+                                    parse_mode="HTML")
+                return
+            except exceptions.BadRequest as err:
+                _logger.error(f"(exception on copying) {err}")
+                await message.reply(_("<i>Невозможно переслать сообщение</i>"),
+                                    parse_mode="HTML")
+                return
 
-        bot.outgoing_messages_count = F("outgoing_messages_count") + 1
-        await bot.save(update_fields=["outgoing_messages_count"])
+            bot.outgoing_messages_count = F("outgoing_messages_count") + 1
+            await bot.save(update_fields=["outgoing_messages_count"])
 
-    elif super_chat_id > 0:
-        # в супер-чате кто-то пишет сообщение сам себе, только для личных сообщений
-        if bot.enable_mailing:
-            asyncio.create_task(MailingUser.get_or_create(telegram_id=message.chat.id, bot=bot))
-        await message.forward(super_chat_id)
-        # И отправить пользователю специальный текст, если он указан
-        if bot.second_text:
-            return await message.answer(text=bot.second_text, parse_mode="HTML")
+        elif super_chat_id > 0:
+            # в супер-чате кто-то пишет сообщение сам себе, только для личных сообщений
+            if bot.enable_mailing:
+                asyncio.create_task(MailingUser.get_or_create(telegram_id=message.chat.id, bot=bot))
+            await message.forward(super_chat_id)
+            # И отправить пользователю специальный текст, если он указан
+            if bot.second_text:
+                return await message.answer(text=bot.second_text, parse_mode="HTML")
+    finally:
+        if not message.bot.session.closed:
+            await message.bot.session.close()
 
 
 async def message_handler(message: types.Message, *args, **kwargs):
