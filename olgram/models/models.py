@@ -89,7 +89,7 @@ class BotStartMessage(Model):
 class BotSecondMessage(Model):
     id = fields.IntField(pk=True)
     bot = fields.ForeignKeyField("models.Bot", related_name="second_texts", on_delete=fields.CASCADE)
-    locale = fields.CharField(max_length=5)
+    locale = fields.CharField(max_length=15)
     text = fields.TextField()
 
     class Meta:
