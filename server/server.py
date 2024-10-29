@@ -31,20 +31,21 @@ async def register_token(bot: Bot) -> bool:
     await unregister_token(bot.decrypted_token())
 
     a_bot = AioBot(bot.decrypted_token())
-    certificate = None
-    if ServerSettings.use_custom_cert():
-        certificate = open(ServerSettings.public_path(), 'rb')
+    try:
+        certificate = None
+        if ServerSettings.use_custom_cert():
+            certificate = open(ServerSettings.public_path(), 'rb')
 
-    res = await a_bot.set_webhook(url_for_bot(bot), certificate=certificate, drop_pending_updates=True,
-                                  max_connections=1)
-    await a_bot.set_my_commands([
-        BotCommand("/start", _("(Пере)запустить бота")),
-        BotCommand("/security_policy", _("Политика конфиденциальности"))
-    ])
-
-    await a_bot.session.close()
-    del a_bot
-    return res
+        res = await a_bot.set_webhook(url_for_bot(bot), certificate=certificate, drop_pending_updates=True,
+                                      max_connections=1)
+        await a_bot.set_my_commands([
+            BotCommand("/start", _("(Пере)запустить бота")),
+            BotCommand("/security_policy", _("Политика конфиденциальности"))
+        ])
+        return res
+    finally:
+        if not a_bot.session.closed:
+            await a_bot.session.close()
 
 
 async def unregister_token(token: str):
@@ -54,9 +55,11 @@ async def unregister_token(token: str):
     :return:
     """
     bot = AioBot(token)
-    await bot.delete_webhook(drop_pending_updates=True)
-    await bot.session.close()
-    del bot
+    try:
+        await bot.delete_webhook(drop_pending_updates=True)
+    finally:
+        if not bot.session.closed:
+            await bot.session.close()
 
 
 def main():
