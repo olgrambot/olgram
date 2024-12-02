@@ -167,11 +167,11 @@ async def send_to_superchat(is_super_group: bool, message: types.Message, super_
                         new_message_2 = await message.bot.send_message(
                             super_chat_id, reply_to_message_id=new_message.message_id, text=tag)
                         await _redis.set(_message_unique_id(bot.pk, new_message_2.message_id), message.chat.id,
-                                         pexpire=thread_timeout)
+                                         pexpire=ServerSettings.redis_timeout_ms())
                 else:
                     new_message = await message.copy_to(super_chat_id, reply_to_message_id=int(thread_first_message))
                 await _redis.set(_message_unique_id(bot.pk, new_message.message_id), message.chat.id,
-                                 pexpire=thread_timeout)
+                                 pexpire=ServerSettings.redis_timeout_ms())
             except exceptions.BadRequest:
                 new_message = await send_user_message(message, super_chat_id, bot, tag)
                 await _redis.set(
@@ -180,7 +180,7 @@ async def send_to_superchat(is_super_group: bool, message: types.Message, super_
             # переслать супер-чат
             new_message = await send_user_message(message, super_chat_id, bot, tag)
             await _redis.set(_thread_unique_id(bot.pk, message.chat.id), new_message.message_id,
-                             pexpire=thread_timeout)
+                             pexpire=ServerSettings.redis_timeout_ms())
     else:  # личные сообщения не поддерживают потоки сообщений: просто отправляем сообщение
         await send_user_message(message, super_chat_id, bot, tag)
 
