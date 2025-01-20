@@ -3,11 +3,11 @@
 # -- Project information
 
 project = 'Olgram'
-copyright = '2024, Civsocit'
-author = 'civsocit'
+copyright = '2025, Civsocit'
+author = 'olgram-team'
 
-release = '0.1'
-version = '0.1.0'
+release = '0.8'
+version = '0.8'
 
 # -- General configuration
 
