@@ -2,7 +2,7 @@
 name = "olgram"
 version = "0.2.0"
 description = ""
-authors = ["Civ Soc <feedback@civsoc.it>"]
+authors = ["Olgram <t.me/civsocit_feedback_bot>"]
 license = "CC0"
 
 [tool.poetry.dependencies]

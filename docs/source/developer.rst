@@ -7,7 +7,12 @@
 Вы можете развернуть Olgram на своём сервере. Вам потребуется собственный VPS или любой хост со статическим адресом
 или доменом.
 
-1. Создайте файл .env и заполните его по образцу `example.env <https://github.com/civsocit/olgram/blob/main/example.env>`_
+.. warning::
+
+   На самом деле эта инструкция немного устарела после рефакторинга сервера (переход на `nginx <https://github.com/olgrambot/olgram/commit/d341a69392655540650ba860c82bb63742e84039>`_), по разворачиванию своего сервера уточняйте в поддержке
+
+
+1. Создайте файл .env и заполните его по образцу `example.env <https://github.com/olgrambot/olgram/blob/main/example.env>`_
 Вам нужно заполнить переменные:
 
 * ``BOT_TOKEN`` - токен нового бота, получить у `@botfather <https://t.me/botfather>`_
@@ -16,7 +21,7 @@
 * ``WEBHOOK_HOST`` - IP адрес или доменное имя сервера, на котором запускается проект
 
 2. Рядом с файлом .env сохраните файл
-`docker-compose.yaml <https://github.com/civsocit/olgram/blob/main/docker-compose.yaml>`_ и соберите его:
+`docker-compose.yaml <https://github.com/olgrambot/olgram/blob/main/docker-compose.yaml>`_ и соберите его:
 
 .. code-block:: console
 
@@ -35,7 +40,7 @@
 
 .. code-block:: console
 
-    (bash) $ git clone https://github.com/civsocit/olgram
+    (bash) $ git clone https://github.com/olgrambot/olgram
 
 2. Внесите в код все изменения, которые хотите внести
 
@@ -56,7 +61,7 @@
 * Наладить реверс-прокси и автоматическое обновление сертификатов - например, с помощью `Traefik <https://github.com/traefik/traefik>`_
 * Скрыть IP сервера с помощью `Cloudflare <https://www.cloudflare.com>`_, чтобы пользователи ботов не могли найти IP адрес хоста по Webhook бота.
 
-Пример более сложной конфигурации есть в файле `docker-compose-full.yaml <https://github.com/civsocit/olgram/blob/main/docker-compose-full.yaml>`_
+Пример более сложной конфигурации есть в файле `docker-compose-full.yaml <https://github.com/olgrambot/olgram/blob/main/docker-compose-full.yaml>`_
 
 
 Как ограничить доступ к своему боту

@@ -3,7 +3,7 @@
 # -- Project information
 
 project = 'Olgram'
-copyright = '2025, Civsocit'
+copyright = '2025, Olgram team'
 author = 'olgram-team'
 
 release = '0.8'

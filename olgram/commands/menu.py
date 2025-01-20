@@ -225,12 +225,12 @@ async def send_bot_settings_menu(bot: Bot, call: types.CallbackQuery):
     mailing_turn = _("включена") if bot.enable_mailing else _("выключена")
     tags_turn = _("включены") if bot.enable_tags else _("выключены")
     text = dedent(_("""
-    <a href="https://olgram.readthedocs.io/ru/latest/options.html#threads">Потоки сообщений</a>: <b>{0}</b>
-    <a href="https://olgram.readthedocs.io/ru/latest/options.html#user-info">Данные пользователя</a>: <b>{1}</b>
-    <a href="https://olgram.readthedocs.io/ru/latest/options.html#antiflood">Антифлуд</a>: <b>{2}</b>
-    <a href="https://olgram.readthedocs.io/ru/latest/options.html#always_second_message">Автоответчик всегда</a>: <b>{3}</b>
-    <a href="https://olgram.readthedocs.io/ru/latest/options.html#thread_interrupt">Прерывать поток</a>: <b>{4}</b>
-    <a href="https://olgram.readthedocs.io/ru/latest/options.html#mailing">Рассылка</a>: <b>{5}</b>
+    <a href="https://olgrambot.readthedocs.io/ru/latest/options.html#threads">Потоки сообщений</a>: <b>{0}</b>
+    <a href="https://olgrambot.readthedocs.io/ru/latest/options.html#user-info">Данные пользователя</a>: <b>{1}</b>
+    <a href="https://olgrambot.readthedocs.io/ru/latest/options.html#antiflood">Антифлуд</a>: <b>{2}</b>
+    <a href="https://olgrambot.readthedocs.io/ru/latest/options.html#always_second_message">Автоответчик всегда</a>: <b>{3}</b>
+    <a href="https://olgrambot.readthedocs.io/ru/latest/options.html#thread_interrupt">Прерывать поток</a>: <b>{4}</b>
+    <a href="https://olgrambot.readthedocs.io/ru/latest/options.html#mailing">Рассылка</a>: <b>{5}</b>
     Теги: <b>{6}</b>
     """)).format(thread_turn, info_turn, antiflood_turn, enable_always_second_message, thread_interrupt,
                  mailing_turn, tags_turn)

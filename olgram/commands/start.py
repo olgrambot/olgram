@@ -22,7 +22,7 @@ async def start(message: types.Message, state: FSMContext):
 
     await message.answer(dedent(_("""
     Olgram Bot — это конструктор ботов обратной связи в Telegram. Подробнее \
-<a href="https://olgram.readthedocs.io">читайте здесь</a>. Следите за обновлениями \
+<a href="https://olgrambot.readthedocs.io">читайте здесь</a>. Следите за обновлениями \
 <a href="https://t.me/civsoc_it">здесь</a>.
 
     Используйте эти команды, чтобы управлять этим ботом:
@@ -41,7 +41,7 @@ async def help(message: types.Message, state: FSMContext):
     Команда /help
     """
     await message.answer(dedent(_("""
-    Читайте инструкции на нашем сайте https://olgram.readthedocs.io
+    Читайте инструкции на нашем сайте https://olgrambot.readthedocs.io
     Техническая поддержка: @civsocit_feedback_bot
     Версия {0}
     """)).format(OlgramSettings.version()))

@@ -1,10 +1,10 @@
 # OLGram
 
-[![Documentation](https://readthedocs.org/projects/olgram/badge/?version=latest)](https://olgram.readthedocs.io)
+[![Documentation](https://readthedocs.org/projects/olgram/badge/?version=latest)](https://olgrambot.readthedocs.io)
 
 [@OlgramBot](https://t.me/olgrambot) - конструктор ботов обратной связи в Telegram
 
-Документация: https://olgram.readthedocs.io
+Документация: https://olgrambot.readthedocs.io
 
 
 **Olgram** [@OlgramBot](https://t.me/olgrambot) это конструктор, который позволяет создавать боты обратной связи
@@ -21,4 +21,4 @@
    связи вы можете принимать заявки от пользователей в общий чат ваших специалистов, обсуждать эти заявки и отвечать
    пользователям прямо из этого чата.
 
-Читайте больше: https://olgram.readthedocs.io
+Читайте больше: https://olgrambot.readthedocs.io
