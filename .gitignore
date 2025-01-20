@@ -13,3 +13,6 @@ backup
 *.pot
 *.patch
 mix
+logs/
+cert/*.crt
+cert/*.key

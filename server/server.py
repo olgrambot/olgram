@@ -70,6 +70,7 @@ def main():
 
     context = None
     if ServerSettings.use_custom_cert():
+        # TODO: sorry guys i actually broke this during NGINX migration
         context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
         context.load_cert_chain(ServerSettings.public_path(), ServerSettings.priv_path())
 

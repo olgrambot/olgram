@@ -1,0 +1,63 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13.4
+    restart: unless-stopped
+    env_file:
+      - release.env
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  redis:
+    image: 'bitnami/redis:7.4.1'
+    restart: unless-stopped
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - redis-db:/bitnami/redis/data
+    env_file:
+      - release.env
+
+  olgram1:
+    build: .
+    command: --onlyserver
+    restart: unless-stopped
+    env_file:
+      - release.env
+    depends_on:
+      - postgres
+      - redis
+
+  olgram2:
+    build: .
+    command: --onlyserver
+    restart: unless-stopped
+    env_file:
+      - release.env
+    depends_on:
+      - postgres
+      - redis
+
+  olgrambot:
+    build: .
+    command: --noserver
+    restart: unless-stopped
+    env_file:
+      - release.env
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    build: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./cert:/cert
+      - ./logs:/logs
+
+volumes:
+  database:
+  redis-db:
